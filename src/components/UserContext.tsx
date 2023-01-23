@@ -1,6 +1,8 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { API } from '~/constants';
-import getUrl from '~/utils/getUrl';
+import { createContext, useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { API, Routes, TOKEN_KEY } from "~/constants";
+import logout from "~/services/logout";
+import getUrl from "~/utils/getUrl";
 
 interface IUser {
   updateUser: () => void;
@@ -24,7 +26,12 @@ const UserContext = createContext<IUser>({
 
 export const useUserContext = () => useContext(UserContext);
 
-export const UserContextProvider = ({ children }) => {
+type UserContextProvider = {
+  children: React.ReactNode;
+};
+
+export const UserContextProvider = ({ children }: UserContextProvider) => {
+  const { push } = useHistory();
   const [errorMessage, setErrorMessage] = useState<string>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [username, setUsername] = useState<string>(null);
@@ -38,9 +45,14 @@ export const UserContextProvider = ({ children }) => {
     try {
       const response = await fetch(getUrl(API.User), {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        }
+          Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+        },
       });
+
+      if (response.status === 401) {
+        await logout();
+        push(Routes.Login);
+      }
 
       const data = await response.json();
 
@@ -52,7 +64,7 @@ export const UserContextProvider = ({ children }) => {
     }
 
     setIsLoading(false);
-  }
+  };
 
   const deleteData = () => {
     setErrorMessage(null);
@@ -63,7 +75,7 @@ export const UserContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-   updateUser();
+    updateUser();
   }, []);
 
   const value = {
@@ -76,11 +88,7 @@ export const UserContextProvider = ({ children }) => {
     id,
   };
 
-  return (
-    <UserContext.Provider value={value}>
-      {children}
-    </UserContext.Provider>
-  )
-}
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+};
 
 export default UserContext;

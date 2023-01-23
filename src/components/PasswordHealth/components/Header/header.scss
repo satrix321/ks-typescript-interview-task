@@ -1,4 +1,4 @@
-@import '../../../../style/_variables';
+@import "../../../../style/variables";
 
 .header {
   height: 160px;
@@ -7,11 +7,11 @@
   align-items: center;
   flex-direction: column;
   background-color: $red;
-  color: white;
+  color: #fff;
 
   .user-section {
     top: 16px;
-    right: 32px;;
+    right: 32px;
     position: absolute;
 
     button {
@@ -24,6 +24,10 @@
       margin-left: 12px;
       border-radius: 9px;
       border-width: 0;
+
+      &:hover {
+        background-color: $grey;
+      }
     }
   }
 }
