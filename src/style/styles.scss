@@ -1,8 +1,10 @@
-@import './_variables';
-@import './_spacings';
-@import './__mixins.scss';
+@import "./variables";
+@import "./spacings";
+@import "./mixins";
 
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -15,6 +17,12 @@ html, body, #app {
 
 .input {
   height: 32px;
+  border: 1px solid $grey;
+
+  &.error {
+    border-color: $red;
+    color: $red;
+  }
 }
 
 .button {
@@ -27,6 +35,10 @@ html, body, #app {
   padding: 12px 6px;
   font-weight: bold;
   font-size: 16px;
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .loading-screen {
@@ -43,4 +55,8 @@ html, body, #app {
   flex-direction: column;
   left: 40%;
   top: 38%;
+}
+
+.error {
+  color: $red;
 }

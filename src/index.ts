@@ -1,5 +1,8 @@
-import {render} from 'react-dom';
+import { render } from "react-dom";
+import Modal from "react-modal";
 
-import App from './App';
+import App from "./App";
 
-render(App(), document.getElementById('app'));
+Modal.setAppElement("#app");
+
+render(App(), document.getElementById("app"));

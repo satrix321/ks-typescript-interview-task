@@ -1,19 +1,15 @@
-import {FC, memo} from 'react';
+import { memo } from "react";
 
-interface IErrorBlock {
-  error: String
-}
+type ErrorBlockProps = {
+  error: string;
+};
 
-const ErrorBlock: FC<IErrorBlock> = ({error}) => {
+const ErrorBlock = ({ error }: ErrorBlockProps) => {
   if (!error) {
     return null;
   }
 
-  return (
-    <div>
-      {error}
-    </div>
-  )
-}
+  return <div className="error mt-8px mb-8px">{error}</div>;
+};
 
 export default memo(ErrorBlock);

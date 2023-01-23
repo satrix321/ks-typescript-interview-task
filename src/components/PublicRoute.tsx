@@ -1,19 +1,15 @@
-import {FC} from 'react';
-import {Route, RouteProps, useHistory} from 'react-router-dom';
-import {Routes} from '~/constants';
+import { Route, RouteProps, useHistory } from "react-router-dom";
+import { Routes, TOKEN_KEY } from "~/constants";
 
-const PublicRoute: FC<RouteProps> = ({
- path,
- component,
-}) => {
-  const {push} = useHistory();
-  const token = localStorage.getItem('token');
+const PublicRoute = ({ path, component }: RouteProps) => {
+  const { push } = useHistory();
+  const token = localStorage.getItem(TOKEN_KEY);
 
   if (token) {
     push(Routes.PasswordHealth);
   }
 
-  return <Route path={path} component={component}/>
+  return <Route path={path} component={component} />;
 };
 
 export default PublicRoute;
